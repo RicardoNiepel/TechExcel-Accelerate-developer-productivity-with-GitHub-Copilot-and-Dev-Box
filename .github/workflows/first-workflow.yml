@@ -1,0 +1,28 @@
+# Create a GitHub workflow with a trigger to execute this workflow manually (that is, not triggered by an automated action such as a push into a branch or pull request).
+# Add a job called job1 to the workflow. The job should include two steps. Each step will be a simple CLI command to echo out the phrases “Step 1 complete!” and “Step 2 complete!” respectively.
+# Manually trigger the workflow you created. Check the log file for the workflow run and ensure that your job succeeded, emitting the echo statements as expected.
+# Add a second job to this workflow and call it job2. In this job, add a single step. This step should call a GitHub Action from the GitHub Marketplace.
+# Find the “Cowsays” action in the marketplace and configure this action to emit the text “Ready for prod–ship it!” in magenta font color.
+
+name: First Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+    job1:
+        runs-on: ubuntu-latest
+        steps:
+        - name: "Step 1"
+          run: echo "Step 1 complete!"
+        - name: "Step 2"
+          run: echo "Step 2 complete!"
+    
+    job2:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Cowsays
+          uses: mscoutermarsh/cowsays-action@master
+          with:
+            text: "Ready for prod-ship it!"
+            color: magenta
