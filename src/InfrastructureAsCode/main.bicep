@@ -109,7 +109,7 @@ resource webApp 'Microsoft.Web/sites@2020-06-01' = {
 
 // Assign the identity of the web app to the container registry
 resource webAppIdentityRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: '${webAppName}roleassignment'
+  name: guid(webApp.id, '7f951dda-4ed3-4680-a7ca-43fe172d538d')
   scope: containerRegistry
   properties: {
     principalId: webApp.identity.principalId
