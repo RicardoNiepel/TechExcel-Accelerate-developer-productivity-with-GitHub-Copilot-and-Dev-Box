@@ -47,6 +47,9 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-01-01-pr
   sku: {
     name: registrySku
   }
+  properties: {
+    adminUserEnabled: true
+  }
 }
 
 // Create a app service plan
@@ -54,12 +57,11 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
   name: appServicePlanName
   location: location
   kind: 'linux'
+  properties: {
+    reserved: true
+  }
   sku: {
     name: sku
-    tier: 'Standard'
-    size: 'S1'
-    family: 'S'
-    capacity: 1
   }
 }
 
@@ -91,6 +93,10 @@ resource webApp 'Microsoft.Web/sites@2020-06-01' = {
         {
           name: 'DOCKER_REGISTRY_SERVER_USERNAME'
           value: containerRegistry.name
+        }
+        {
+          name: 'DOCKER_REGISTRY_SERVER_PASSWORD'
+          value: containerRegistry.listCredentials().passwords[0].value
         }
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
