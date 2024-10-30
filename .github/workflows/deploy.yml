@@ -1,6 +1,14 @@
   # We only want to run this script manually.
   on:
-    workflow_dispatch
+    workflow_dispatch:
+      inputs:
+       appenv:
+         type: choice
+         description: Choose the target environment
+         options: 
+           - dev
+           - test
+           - prod
 
   # Environment variables are defined in an "env" section.
   # We set the target environment to dev.
@@ -53,5 +61,5 @@
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./src/InfrastructureAsCode/main.bicep
-          # Use the environment variable called targetEnv
-          parameters: environment=${{ env.targetEnv }}
+          # Use the environment variable called targetEnv and set location to us east 2
+          parameters: environment=${{ env.targetEnv }} location=eastus2
