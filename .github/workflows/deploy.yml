@@ -11,13 +11,18 @@
 
   # The overall workflow name will be Azure Bicep. This will show up in the
   # GitHub Action page.
-  name: Azure Bicep
+  name: Deploy Azure Bicep
   jobs:
     # This script has one job: build and deploy the IaC resources
     build-and-deploy:
       # We run this on an Ubuntu-based GitHub hosted runner. This hosted runner
       # has certain software already installed, including az cli
       runs-on: ubuntu-latest
+      permissions:
+        contents: read
+        pages: write
+        id-token: write
+        
       steps:
       # Check out the code. This grabs code from the repository and
       # makes it available to the GitHub hosted runner. It will usually be the
