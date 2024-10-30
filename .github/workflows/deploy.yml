@@ -10,13 +10,6 @@
            - test
            - prod
 
-  # Environment variables are defined in an "env" section.
-  # We set the target environment to dev.
-  # Open the deploy-advanced.yml file to see how we can accept user input
-  # instead of needing to change this file to switch environments.
-  env:
-    targetEnv: dev
-
   # The overall workflow name will be Azure Bicep. This will show up in the
   # GitHub Action page.
   name: Deploy Azure Bicep
@@ -62,4 +55,4 @@
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./src/InfrastructureAsCode/main.bicep
           # Use the environment variable called targetEnv and set location to us east 2
-          parameters: environment=${{ env.targetEnv }} location=eastus2
+          parameters: environment=${{ github.event.inputs.appenv }} location=eastus2
